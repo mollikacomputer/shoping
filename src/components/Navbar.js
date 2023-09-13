@@ -1,6 +1,10 @@
+import { afterLoginNavData, beforeLoginNavData } from "@/data/navData";
 import React from "react";
+import NavLink from "./NavLink";
 
 const Navbar = () => {
+  const user = null;
+  const navData = user ? afterLoginNavData : beforeLoginNavData;
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -48,25 +52,18 @@ const Navbar = () => {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li>
-            <a>Item 1</a>
-          </li>
-          <li tabIndex={0}>
-            <details>
-              <summary>Parent</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <a>Item 3</a>
-          </li>
+          {navData.map(({path, title})=>(
+            <li key={path} className="mx-auto">
+               <NavLink
+                // onClick={() => setNavToggle(false)}
+                href={path}
+                activeClassName="text-blue-500"
+                exact={path === "/"}
+              >
+                {title}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="navbar-end">
